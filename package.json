@@ -1,6 +1,6 @@
 {
   "name": "collectweak",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Enhanced TypeScript collections with powerful utility methods",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -17,10 +17,13 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
+    "prepublishOnly": "npm test",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "typescript",
