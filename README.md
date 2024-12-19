@@ -59,8 +59,8 @@ console.log([...odds]);  // [1, 3]
 
 - `groupBy<R>(keySelector: (value: V) => R): TweakedMap<R, V[]>`
 - `filter(predicate: (value: V, key: K) => boolean): TweakedMap<K, V>`
-- `mapValues<R>(transformer: (value: V) => R): TweakedMap<K, R>`
-- `reduce<R>(reducer: (acc: R, value: V) => R, initial: R): R`
+- `mapValues<R>(transformer: (value: V, key: K) => R): TweakedMap<K, R>`
+- `reduce<R>(reducer: (accumulator: R, value: V, key: K) => R, initial: R): R`
 
 ### TweakedSet<T>
 
