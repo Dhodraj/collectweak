@@ -9,8 +9,21 @@ export class TweakedSet<T> extends Set<T> implements ITweakedSet<T> {
    * @returns A map where keys are group identifiers and values are arrays
    * 
    * @example
-   * const numbers = new TweakedSet([1, 2, 3, 4]);
-   * const byParity = numbers.groupBy(n => n % 2 === 0 ? 'even' : 'odd');
+   * const players = new TweakedSet([
+   *   'MS Dhoni',
+   *   'Ravindra Jadeja',
+   *   'Ruturaj Gaikwad',
+   *   'Shivam Dube',
+   *   'Matheesha Pathirana'
+   * ]);
+   * const byExperience = players.groupBy(player => {
+   *   const veterans = ['MS Dhoni', 'Ravindra Jadeja'];
+   *   return veterans.includes(player) ? 'veteran' : 'youngster';
+   * });
+   * // Result: Map {
+   * //   'veteran' => ['MS Dhoni', 'Ravindra Jadeja'],
+   * //   'youngster' => ['Ruturaj Gaikwad', 'Shivam Dube', 'Matheesha Pathirana']
+   * // }
    */
   groupBy<K>(keySelector: (value: T) => K, options: GroupByOptions = {}): TweakedMap<K, T[]> {
     const result = new TweakedMap<K, T[]>();
@@ -38,9 +51,15 @@ export class TweakedSet<T> extends Set<T> implements ITweakedSet<T> {
    * @returns A new set containing elements from both sets
    * 
    * @example
-   * const set1 = new TweakedSet([1, 2]);
-   * const set2 = new TweakedSet([2, 3]);
-   * const union = set1.union(set2); // [1, 2, 3]
+   * const indianPlayers = new TweakedSet(['MS Dhoni', 'Ravindra Jadeja', 'Ruturaj Gaikwad']);
+   * const allRounders = new TweakedSet(['Ravindra Jadeja', 'Shivam Dube']);
+   * const squadMembers = indianPlayers.union(allRounders);
+   * // Result: Set {
+   * //   'MS Dhoni',
+   * //   'Ravindra Jadeja',
+   * //   'Ruturaj Gaikwad',
+   * //   'Shivam Dube'
+   * // }
    */
   union(other: Set<T>): TweakedSet<T> {
     return new TweakedSet<T>([...this, ...other]);
@@ -52,9 +71,12 @@ export class TweakedSet<T> extends Set<T> implements ITweakedSet<T> {
    * @returns A new set containing common elements
    * 
    * @example
-   * const set1 = new TweakedSet([1, 2]);
-   * const set2 = new TweakedSet([2, 3]);
-   * const intersection = set1.intersection(set2); // [2]
+   * const powerHitters = new TweakedSet(['MS Dhoni', 'Shivam Dube']);
+   * const allRounders = new TweakedSet(['Ravindra Jadeja', 'Shivam Dube']);
+   * const powerHittingAllRounders = powerHitters.intersection(allRounders);
+   * // Result: Set {
+   * //   'Shivam Dube'
+   * // }
    */
   intersection(other: Set<T>): TweakedSet<T> {
     return new TweakedSet<T>([...this].filter(x => other.has(x)));
@@ -66,9 +88,13 @@ export class TweakedSet<T> extends Set<T> implements ITweakedSet<T> {
    * @returns A new set containing elements unique to this set
    * 
    * @example
-   * const set1 = new TweakedSet([1, 2]);
-   * const set2 = new TweakedSet([2, 3]);
-   * const difference = set1.difference(set2); // [1]
+   * const captains = new TweakedSet(['MS Dhoni', 'Ravindra Jadeja', 'Ruturaj Gaikwad']);
+   * const allRounders = new TweakedSet(['Ravindra Jadeja', 'Shivam Dube']);
+   * const pureCaptains = captains.difference(allRounders);
+   * // Result: Set {
+   * //   'MS Dhoni',
+   * //   'Ruturaj Gaikwad'
+   * // }
    */
   difference(other: Set<T>): TweakedSet<T> {
     return new TweakedSet<T>([...this].filter(x => !other.has(x)));
@@ -80,8 +106,21 @@ export class TweakedSet<T> extends Set<T> implements ITweakedSet<T> {
    * @returns A tuple of two sets: [matching, non-matching]
    * 
    * @example
-   * const numbers = new TweakedSet([1, 2, 3, 4]);
-   * const [evens, odds] = numbers.partition(n => n % 2 === 0);
+   * const players = new TweakedSet([
+   *   'MS Dhoni',
+   *   'Ravindra Jadeja',
+   *   'Ruturaj Gaikwad',
+   *   'Shivam Dube',
+   *   'Matheesha Pathirana'
+   * ]);
+   * const internationalPlayers = new Set(['MS Dhoni', 'Ravindra Jadeja']);
+   * const [experienced, upcoming] = players.partition(
+   *   player => internationalPlayers.has(player)
+   * );
+   * // Result: [
+   * //   Set { 'MS Dhoni', 'Ravindra Jadeja' },
+   * //   Set { 'Ruturaj Gaikwad', 'Shivam Dube', 'Matheesha Pathirana' }
+   * // ]
    */
   partition(predicate: Predicate<T>): [TweakedSet<T>, TweakedSet<T>] {
     const truthy = new TweakedSet<T>();
