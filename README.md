@@ -1,6 +1,6 @@
 # CollectWeak
 
-A TypeScript library that enhances JavaScript's built-in Map and Set collections with powerful utility methods for data manipulation.
+`TweakedMap` and `TweakedSet` extend JavaScript's built-in Map and Set with chainable helper methods. They keep every native method, ship with full TypeScript types, and have no runtime dependencies.
 
 ## Installation
 
